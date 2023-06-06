@@ -1,0 +1,123 @@
+import tkinter as tk #mengimport tkinter sebagai tk
+from tkinter import * #mengimport semua kelas dan fungsi dari modul tkinter
+from tkinter import filedialog #mengimport filedialog dari modul tkinter
+
+global fileName #deklarasi variabel global fileName
+fileName = False  #inisialisasi variabel fileName dengan nilai False
+
+def Tampilan():  #pendefinisian fungsi Tampilan()
+    global TextArea  #deklarasi variabel TextArea sebagai variabel global
+    TextArea = tk.Text(windows)  #untuk membuat objek teks dengan menggunakan kelas Text dari modul tkinter dan menetapkannya ke variabel TextArea
+    TextArea.grid(row=0, column=1, sticky=tk.N + tk.E + tk.S + tk.W)  #untuk menempatkan objek teks di baris 0, kolom 1 dari tata letak menggunakan metode grid(). Sticky digunakan untuk menetapkan jangkauan objek teks ke semua arah (utara, timur, selatan, barat)
+
+    frameButton = tk.Frame(windows, relief=tk.RAISED, bd=3)  #untuk membuat objek bingkai dengan menggunakan kelas Frame dari modul tkinter dan menetapkannya ke variabel frameButton. Relief=tk.RAISED digunakan untuk mengatur tampilan bingkai dan bd=3 menetapkan ketebalan bingkai
+    frameButton.grid(row=0, column=0, sticky=tk.N + tk.S) #untuk menempatkan objek bingkai di baris 0, kolom 0 dari tata letak menggunakan metode grid(). Sticky digunakan untuk menetapkan jangkauan objek bingkai hanya pada arah utara dan selatan
+
+    newButton = tk.Button(frameButton, text="New File", command=NewFile)  #untuk membuat objek tombol dengan menggunakan kelas Button dari modul tkinter, menetapkan teks "New File" ke tombol, dan menetapkan fungsi NewFile sebagai perintah yang akan dijalankan saat tombol diklik. Objek tombol ditempatkan di dalam objek bingkai
+    newButton.grid(row=0, column=0, padx=20, pady=30)  #untuk menempatkan objek tombol di baris 0, kolom 0 dari tata letak menggunakan metode grid(). padx dan pady digunakan untuk memberikan jarak antara tombol dan tepi bingkai
+
+    openButton = tk.Button(frameButton, text="Open File", command=OpenFile)  #untuk membuat objek tombol dengan menggunakan kelas Button dari modul tkinter, menetapkan teks "Open File" dan fungsi OpenFile sebagai perintahnya yang akan dijalankan saat tombol diklik. Objek tombol ditempatkan di dalam objek bingkai
+    openButton.grid(row=1, column=0, padx=20, pady=30)  #untuk menempatkan objek tombol di baris 1, kolom 0 dari tata letak menggunakan metode grid(). padx dan pady digunakan untuk memberikan jarak antara tombol dan tepi bingkai
+
+    saveButton = tk.Button(frameButton, text="Save", command=SaveFile)  #untuk membuat objek tombol dengan menggunakan kelas Button dari modul tkinter, menetapkan teks "Save" dan fungsi SaveFile sebagai perintahnya yang akan dijalankan saat tombol diklik. Objek tombol ditempatkan di dalam objek bingkai
+    saveButton.grid(row=2, column=0, padx=20, pady=30)  #untuk menempatkan objek tombol di baris 2, kolom 0 dari tata letak menggunakan metode grid(). padx dan pady digunakan untuk memberikan jarak antara tombol dan tepi bingkai
+
+    saveAsButton = tk.Button(frameButton, text="Save As", command=SaveAsFile)  #untuk membuat objek tombol dengan menggunakan kelas Button dari modul tkinter, menetapkan teks "Save As" dan fungsi SaveAsFile sebagai perintahnya yang akan dijalankan saat tombol diklik. Objek tombol ditempatkan di dalam objek bingkai
+    saveAsButton.grid(row=3, column=0, padx=20, pady=30)  #untuk menempatkan objek tombol di baris 3, kolom 0 dari tata letak menggunakan metode grid(). padx dan pady digunakan untuk memberikan jarak antara tombol dan tepi bingkai
+
+    editButton = tk.Button(frameButton, text="Exit", command=ExitFile)  #untuk membuat objek tombol dengan menggunakan kelas Button dari modul tkinter, menetapkan teks "Exit" dan fungsi ExitFile sebagai perintahnya yang akan dijalankan saat tombol diklik. Objek tombol ditempatkan di dalam objek bingkai
+    editButton.grid(row=4, column=0, padx=20, pady=30)  #untuk menempatkan objek tombol di baris 4, kolom 0 dari tata letak menggunakan metode grid(). padx dan pady digunakan untuk memberikan jarak antara tombol dan tepi bingkai
+
+
+    frameButton2 = tk.Frame(windows, relief=tk.RAISED, bd=3)  #untuk membuat objek bingkai dengan menggunakan kelas Frame dari modul tkinter dan menetapkannya ke variabel frameButton2. Relief=tk.RAISED digunakan untuk mengatur tampilan bingkai dan bd=3 menetapkan ketebalan bingkai
+    frameButton2.grid(row=0, column=2, sticky=tk.N + tk.S)  #untuk menempatkan objek bingkai di baris 0, kolom 2 dari tata letak menggunakan metode grid(). Sticky digunakan untuk menetapkan jangkauan objek bingkai hanya pada arah utara dan selatan
+
+    editButton = tk.Button(frameButton2, text="Cut", command=CutEdit)  #untuk membuat objek tombol dengan menggunakan kelas Button dari modul tkinter, menetapkan teks "Cut" dan fungsi CutEdit sebagai perintahnya yang akan dijalankan saat tombol diklik. Objek tombol ditempatkan di dalam objek bingkai
+    editButton.grid(row=0, column=0, padx=20, pady=30)  #untuk menempatkan objek tombol di baris 0, kolom 0 dari tata letak menggunakan metode grid(). padx dan pady digunakan untuk memberikan jarak antara tombol dan tepi bingkai
+
+    editButton = tk.Button(frameButton2, text="Copy", command=CopyEdit)  #untuk membuat objek tombol dengan menggunakan kelas Button dari modul tkinter, menetapkan teks "Copy" dan fungsi CopyEdit sebagai perintahnya yang akan dijalankan saat tombol diklik. Objek tombol ditempatkan di dalam objek bingkai
+    editButton.grid(row=1, column=0, padx=20, pady=30)  #untuk menempatkan objek tombol di baris 1, kolom 0 dari tata letak menggunakan metode grid(). padx dan pady digunakan untuk memberikan jarak antara tombol dan tepi bingkai
+
+    editButton = tk.Button(frameButton2, text="Paste", command=PasteEdit)  #untuk membuat objek tombol dengan menggunakan kelas Button dari modul tkinter, menetapkan teks "Paste" dan fungsi PasteEdit sebagai perintahnya yang akan dijalankan saat tombol diklik. Objek tombol ditempatkan di dalam objek bingkai
+    editButton.grid(row=2, column=0, padx=20, pady=30)  #untuk menempatkan objek tombol di baris 2, kolom 0 dari tata letak menggunakan metode grid(). padx dan pady digunakan untuk memberikan jarak antara tombol dan tepi bingkai
+
+    editButton = tk.Button(frameButton2, text="Choose All", command=ChooseAllEdit)  #untuk membuat objek tombol dengan menggunakan kelas Button dari modul tkinter, menetapkan teks "Choose All" dan fungsi ChooseAllEdit sebagai perintahnya yang akan dijalankan saat tombol diklik. Objek tombol ditempatkan di dalam objek bingkai
+    editButton.grid(row=4, column=0, padx=20, pady=30)  #untuk menempatkan objek tombol di baris 3, kolom 0 dari tata letak menggunakan metode grid(). padx dan pady digunakan untuk memberikan jarak antara tombol dan tepi bingkai
+    windows.bind("<Alt-a>", ChooseAllEdit) #untuk mengikat tombol Alt-a untuk memilih semua teks+
+
+
+def NewFile():  #pendefinisian fungsi NewFile()
+    global TextArea  #deklarasi variabel TextArea sebagai variabel global
+    windows.title("Notepad")  #mengatur judul jendela aplikasi menjadi "Notepad"
+    file = None  #menginisialisasi variabel file dengan nilai None
+    TextArea.delete(1.0, END)   #untuk menghapus isi teks pada TextArea mulai dari baris 1, kolom 0 hingga akhir teks 
+
+def OpenFile():  #pendefinisian fungsi OpenFile()
+    #untuk membuka dialog pemilihan file menggunakan filedialog.askopenfilename dan menyimpan hasilnya ke dalam variabel file. Dialog ini akan menampilkan file dengan ekstensi default ".txt" dan memfilter jenis file yang dapat dipilih dengan ekstensi ".txt" dan ".csv"
+    file = filedialog.askopenfilename(defaultextension=".txt", filetypes=[("All files", "*.*"), ("Text Documents", ".txt"), ("CSV file", "*.csv")])
+    if file:  #untuk memeriksa apakah file tidak kosong
+        TextArea.delete(1.0, END)  #untuk menghapus isi teks pada TextArea mulai dari baris 1, kolom 0 hingga akhir teks 
+        global fileName  #deklarasi variabel global fileName
+        fileName = file  #inisialisasi variabel fileName dengan nilai file
+        file = open(file, "rb")  #untuk membuka file dengan nama yang disimpan dalam variabel file dalam mode baca biner ("rb") dan menyimpan hasilnya kembali ke variabel file
+        TextArea.insert(1.0, file.read())  #untuk memasukkan isi file yang dibaca ke dalam "TextArea" pada posisi 1.0
+        file.close()  #menutup file yang dibuka
+
+def SaveFile():  #pendefinisian fungsi SaveFile()
+    global TextArea, fileName, file  #deklarasi variabel TextArea, fileName, dan file
+    if file == None:  #untuk memeriksa apakah variabel file bernilai None
+        #untuk membuka dialog save file untuk meminta pengguna memilih nama file dan lokasi penyimpanan dengan ekstensi default ".txt" dan jenis file yang dapat dipilih adalah semua file, dokumen teks, dan file CSV
+        file = filedialog.asksaveasfilename(defaultextension=".txt",  filetypes=[("All files", "*.*"), ("Text Documents", ".txt"), ("CSV file", "*.csv")])
+
+        if file == None:  #memeriksa apakah variabel file belum ditetapkan(None)
+            #untuk membuka dialog save file untuk meminta pengguna memilih nama file dan lokasi penyimpanan dengan ekstensi default ".txt" dan jenis file yang dapat dipilih adalah semua file, dokumen teks, dan file CSV
+            file = filedialog.asksaveasfilename(defaultextension=".txt",  filetypes=[("All files", "*.*"), ("Text Documents", ".txt"), ("CSV file", "*.csv")])
+        else: #apabila kondisi sebelumnya tidak terpenuhi maka akan dijalankan kode berikut 
+            file = open(fileName, "w")  #untuk membuka file dengan nama "fileName" yang sebelumnya dipilih oleh pengguna dalam mode write ("w"). Ini akan menggantikan file yang ada jika file dengan nama yang sama sudah ada
+            file.write(TextArea.get(1.0, END))  #untuk menulis teks yang ada di dalam "TextArea" ke dalam file yang dibuka
+            file.close()  #menutup file yang dibuka
+            
+    else:  #apabila kondisi sebelumnya tidak terpenuhi maka kaan dijalankan kode berikut
+        file = open(fileName, "w")  #untuk membuka file dengan nama "fileName" yang sebelumnya dipilih oleh pengguna dalam mode write ("w"). Ini akan menggantikan file yang ada jika file dengan nama yang sama sudah ada
+        file.write(TextArea.get(1.0, END))  #untuk menulis teks yang ada di dalam "TextArea" ke dalam file yang dibuka
+        file.close()  #menutup file yang dibuka
+     
+def SaveAsFile():  #pendefinisian fungsi SaveAsFile()
+    global TextArea, file    #deklarasi variabel TextArea dan file
+    #untuk membuka dialog save file untuk meminta pengguna memilih nama file dan lokasi penyimpanan dengan ekstensi default ".txt" dan jenis file yang dapat dipilih adalah semua file, dokumen teks, dan file CSV
+    file = filedialog.asksaveasfilename(defaultextension=".txt",  filetypes=[("All files", "*.*"), ("Text Documents", ".txt"), ("CSV file", "*.csv")])
+    if file:  #untuk memeriksa apakah variabel file memiliki nilai (yaitu, pengguna telah memilih nama file dan lokasi penyimpanan)
+        with open(file, "w") as file:  #untuk membuka file yang telah dipilih pengguna dalam mode write ("w"). File tersebut akan diakses melalui variabel file yang merupakan nama file yang dipilih oleh pengguna
+            file.write(TextArea.get("1.0", tk.END))  #untuk menulis teks yang ada di dalam "TextArea" ke dalam file yang dibuka
+            windows.title("Notepad - " + file)  #untuk mengatur judul jendela aplikasi menjadi "Notepad - " diikuti dengan nama file yang dipilih oleh pengguna
+
+def ExitFile():  #pendefinisian fungsi ExitFile()
+    windows.destroy()  #untuk menutup jendela windows saat ini
+
+def CutEdit():  #pendefinisian fungsi CutEdit()
+    global TextArea   #deklarasi variabel TextArea sebagai variabel global
+    TextArea.event_generate("<<Cut>>")  #untuk menghasilkan event atau peristiwa "Cut" pada TextArea
+
+def CopyEdit():  #pendefinisian fungsi CopyEdit()
+    global TextArea  #deklarasi variabel TextArea sebagai variabel global
+    TextArea.event_generate("<<Copy>>")  #untuk menghasilkan event atau peristiwa "Copy" pada TextArea
+
+def PasteEdit():  #pendefinisian fungsi PasteEdit()
+    global TextArea  #deklarasi variabel TextArea sebagai variabel global
+    TextArea.event_generate("<<Paste>>")  #untuk menghasilkan event atau peristiwa "Paste" pada TextArea
+
+def ChooseAllEdit():  #pendefinisian fungsi ChooseAllEdit()
+    TextArea.tag_add(tk.SEL, "1.0", tk.END)  #untuk menandai semua teks
+    TextArea.mark_set(tk.INSERT, "1.0")  #untuk menetapkan penandaan kursor di TextArea
+    TextArea.see(tk.INSERT)  #untuk emastikan kursor terlihat di area teks TextArea
+
+
+windows = tk.Tk()  #membuat objek Tkinter windows yang akan menjadi jendela utama aplikasi
+windows.title("Notepad")  #untuk mengatur judul jendela aplikasi menjadi "Notepad"
+windows.rowconfigure(0, minsize=500)  #untuk mengatur baris pertama dari grid dalam jendela memiliki tinggi minimal sebesar 500 piksel
+windows.columnconfigure(1, minsize=800)  #untuk mengatur kolom kedua dari grid dalam jendela memiliki lebar minimal sebesar 800 piksel
+file = None  #untuk membuat variabel file dengan nilai awal None, yang nantinya akan digunakan untuk menyimpan informasi tentang file yang sedang diedit
+
+Tampilan()  #untuk memanggil fungsi Tampilan(), dimana ode ini mengasumsikan bahwa fungsi Tampilan() sudah didefinisikan sebelumnya
+
+windows.mainloop()  #untuk memulai loop utama aplikasi Tkinter untuk menampilkan jendela dan merespons interaksi pengguna. Baris ini akan menjaga jendela tetap terbuka sampai pengguna menutupnya
